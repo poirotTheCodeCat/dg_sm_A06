@@ -29,5 +29,19 @@ namespace dg_sm_A06
             string stopMessage = "Service has stopped";
             Logger.Log(stopMessage);
         }
+
+        protected override void OnContinue()
+        {
+            string continueMessage = "Service has resumed";
+            base.OnContinue();
+            Logger.Log(continueMessage);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            string pauseMessage = "Service has been paused";
+            Logger.Log(pauseMessage);
+        }
     }
 }
