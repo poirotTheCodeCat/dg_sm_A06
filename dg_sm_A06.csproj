@@ -34,7 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,17 +47,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
-    <Compile Include="server_Service.cs">
+    <Compile Include="MyService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="server_Service.Designer.cs">
-      <DependentUpon>server_Service.cs</DependentUpon>
+    <Compile Include="MyService.Designer.cs">
+      <DependentUpon>MyService.cs</DependentUpon>
     </Compile>
     <Compile Include="chat_server.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

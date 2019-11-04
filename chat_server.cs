@@ -22,7 +22,7 @@ namespace dg_sm_A06
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new server_Service()
+                new MyService()
             };
             ServiceBase.Run(ServicesToRun);
 

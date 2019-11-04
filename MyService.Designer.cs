@@ -1,6 +1,6 @@
 ﻿namespace dg_sm_A06
 {
-    partial class server_Service
+    partial class MyService
     {
         /// <summary> 
         /// Required designer variable.

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace dg_sm_A06
 {
-    public partial class server_Service : ServiceBase
+    public partial class MyService : ServiceBase
     {
-        public server_Service()
+        public MyService()
         {
             InitializeComponent();
             CanPauseAndContinue = true;
@@ -20,28 +20,32 @@ namespace dg_sm_A06
 
         protected override void OnStart(string[] args)
         {
-            string startMessage = "Service has started";
+            string startMessage = "Chat Server Service has started";
             Logger.Log(startMessage);
+            Logger.TxtLog(startMessage);
         }
 
         protected override void OnStop()
         {
-            string stopMessage = "Service has stopped";
+            string stopMessage = "Chat Server Service has stopped";
             Logger.Log(stopMessage);
+            Logger.TxtLog(stopMessage);
         }
 
         protected override void OnContinue()
         {
-            string continueMessage = "Service has resumed";
+            string continueMessage = "Chat Server Service has resumed";
             base.OnContinue();
             Logger.Log(continueMessage);
+            Logger.TxtLog(continueMessage);
         }
 
         protected override void OnPause()
         {
             base.OnPause();
-            string pauseMessage = "Service has been paused";
+            string pauseMessage = "Chat Server Service has been paused";
             Logger.Log(pauseMessage);
+            Logger.TxtLog(pauseMessage);
         }
     }
 }
