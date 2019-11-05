@@ -30,7 +30,7 @@ namespace dg_sm_A06
 
         public static void TxtLog(string logInfo)
         {
-            string logFile = "log.txt";
+            string logFile =  AppDomain.CurrentDomain.BaseDirectory +"log.txt";
             logInfo = logInfo + "\n";
             if(!File.Exists(logFile))
             {
