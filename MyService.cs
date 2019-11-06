@@ -23,6 +23,7 @@ namespace dg_sm_A06
             string startMessage = "Chat Server Service has started";
             Logger.Log(startMessage);
             Logger.TxtLog(startMessage);
+            base.OnStart(args);
         }
 
         protected override void OnStop()
@@ -30,6 +31,7 @@ namespace dg_sm_A06
             string stopMessage = "Chat Server Service has stopped";
             Logger.Log(stopMessage);
             Logger.TxtLog(stopMessage);
+            base.OnStop();
         }
 
         protected override void OnContinue()
