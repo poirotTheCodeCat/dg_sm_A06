@@ -23,6 +23,7 @@ namespace dg_sm_A06
     public partial class MyService : ServiceBase
     {
         private static List<TcpClient> clientList = new List<TcpClient>();          // keeps track of the clients that are connected
+        private static List<Thread> threadList = new List<Thread>();
         static volatile bool isRunning;
         public MyService()
         {
@@ -61,6 +62,7 @@ namespace dg_sm_A06
                         clientIP = client.Client.LocalEndPoint as IPEndPoint;       // get the client's IP address
 
                         clientList.Add(client);       // add the client to the clientList
+                        threadList.Add(waitThread);     // add the client thread to the clientList
 
                         waitThread.Start(client);     // start the thread
                     }
@@ -86,6 +88,10 @@ namespace dg_sm_A06
         */
         public static void waitForMessage(object o)
         {
+            if (isRunning == false)
+            {
+                Thread.Sleep(Timeout.Infinite);
+            }
             TcpClient client = (TcpClient)o;
             Byte[] bytes = new byte[256];       // bytes will be used to read data
             String data = null;                 // this string will be used to read data
@@ -111,7 +117,7 @@ namespace dg_sm_A06
                 }
             }
             clientList.Remove(client);  // remove user from the user list
-            client.Close(); // shut down connection when user disconnects
+            client.Close(); // shut down connection when user disconnects      
         }
 
 
@@ -153,6 +159,7 @@ namespace dg_sm_A06
         protected override void OnStop()
         {
             isRunning = false;
+            stopAllClients();
             string stopMessage = "Chat Server Service has stopped";
             Logger.TxtLog(stopMessage);
             base.OnStop();
@@ -170,6 +177,10 @@ namespace dg_sm_A06
             if (isRunning == false)
             {
                 isRunning = true;
+                foreach (Thread t in threadList)
+                {
+                    t.Interrupt();
+                }
                 string continueMessage = "Chat Server Service has resumed";
                 base.OnContinue();
                 Logger.TxtLog(continueMessage);
