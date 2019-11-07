@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File : MyServices.cs
+ * Programmers : Daniel Grew and Sasha Malesevic
+ * Date Last Modified : 2019-11-06
+ * Description : This file contains the logic of the service - that is - this file contains the logic for the chat server
+ *               which connects to a client, accepts messages, and sends that message to all other clients
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -123,15 +130,26 @@ namespace dg_sm_A06
             clientList.Clear();
         }
 
+        /*
+         * Function : OnStart()
+         * Parameters : string[] args
+         * Descriptions : This function is called when the user starts the service
+         * Returns : Nothing
+         */
         protected override void OnStart(string[] args)
         {
             isRunning = true;
             string startMessage = "Chat Server Service has started";
-            Logger.Log(startMessage);
             Logger.TxtLog(startMessage);
             base.OnStart(args);
         }
 
+        /*
+         * Function : OnStop()
+         * Parameters : None
+         * Descriptions : This function is called when the user stops the service
+         * Returns : Nothing
+         */
         protected override void OnStop()
         {
             isRunning = false;
@@ -140,20 +158,40 @@ namespace dg_sm_A06
             base.OnStop();
         }
 
+        /*
+         * Function : OnContinue()
+         * Parameters : nothing
+         * Descriptions :  This function is called when the user Continues the service, if the service is paused when 
+         *                 called, the service resumes as normal
+         * Returns : Nothing
+         */
         protected override void OnContinue()
         {
-            isRunning = true;
-            string continueMessage = "Chat Server Service has resumed";
-            base.OnContinue();
-            Logger.TxtLog(continueMessage);
+            if (isRunning == false)
+            {
+                isRunning = true;
+                string continueMessage = "Chat Server Service has resumed";
+                base.OnContinue();
+                Logger.TxtLog(continueMessage);
+            }
         }
 
+        /*
+         * Function : OnPause()
+         * Parameters : None
+         * Descriptions : This function is called when the user pauses the service. If the service is currently running, then it is
+         *                paused, and no longer functions (The server no longer accepts clients)
+         * Returns : Nothing
+         */
         protected override void OnPause()
         {
-            isRunning = false;
-            base.OnPause();
-            string pauseMessage = "Chat Server Service has been paused";
-            Logger.TxtLog(pauseMessage);
+            if (isRunning == true)
+            {
+                isRunning = false;
+                base.OnPause();
+                string pauseMessage = "Chat Server Service has been paused";
+                Logger.TxtLog(pauseMessage);
+            }
         }
     }
 

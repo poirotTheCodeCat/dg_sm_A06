@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File : chat_server.cs
+ * Programmers : Daniel Grew and Sasha Malesevic
+ * Date Last Modified : 2019-11-06
+ * Description : this file contains the main function which starts the server
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
@@ -25,6 +31,6 @@ namespace dg_sm_A06
                 new MyService()
             };
             ServiceBase.Run(ServicesToRun);
-
+        }
     }
 }
