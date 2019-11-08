@@ -59,7 +59,7 @@ namespace dg_sm_A06
             }
             else
             {
-                StreamWriter append = File.AppendText(logFile);         // if file exists, append the message to the end of the file
+                StreamWriter append = File.AppendAllText(logFile, logFile);         // if file exists, append the message to the end of the file
                 try
                 {
                     append.WriteLine(logInfo);

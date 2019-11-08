@@ -23,16 +23,11 @@ namespace dg_sm_A06
     public partial class MyService : ServiceBase
     {
         static serverClass server;
-        static Thread runServer;
+        static Thread serverThread;
         public MyService()
         {
             InitializeComponent();
             CanPauseAndContinue = true;
-
-            server = new serverClass();
-
-            ThreadStart tStart = new ThreadStart(server.chatServer);
-            runServer = new Thread(tStart);
         }
 
 
@@ -44,10 +39,13 @@ namespace dg_sm_A06
          */
         protected override void OnStart(string[] args)
         {
-            runServer.Start();
+            server = new serverClass();
+            ThreadStart tStart = new ThreadStart(server.chatServer);        // set delegate to point at a the server method chatServer
+            serverThread = new Thread(tStart);      // create the server thread
+            serverThread.Start();       // start the server thread
+
             string startMessage = "Chat Server Service has started";
             Logger.TxtLog(startMessage);
-            base.OnStart(args);
         }
 
         /*
@@ -58,17 +56,7 @@ namespace dg_sm_A06
          */
         protected override void OnStop()
         {
-            try
-            {
-                runServer.Abort();
-            }
-            catch (ThreadAbortException e)
-            {
-                server.stop();
-                string stopMessage = "Chat Server Service has stopped";
-                Logger.TxtLog(stopMessage);
-                base.OnStop();
-            }
+            server.stop();
         }
 
         /*
@@ -81,10 +69,6 @@ namespace dg_sm_A06
         protected override void OnContinue()
         {
             server.continueRun();
-            runServer.Interrupt();
-            string continueMessage = "Chat Server Service has resumed";
-            base.OnContinue();
-            Logger.TxtLog(continueMessage);
         }
 
         /*
@@ -96,10 +80,7 @@ namespace dg_sm_A06
          */
         protected override void OnPause()
         {
-            server.pause();
-            base.OnPause();
-            string pauseMessage = "Chat Server Service has been paused";
-            Logger.TxtLog(pauseMessage);
+            server.pauseServer();
         }
     }
 
